@@ -1,0 +1,19 @@
+{
+  "name": "page-transition",
+  "version": "0.1.0",
+  "description": "サイト内リンクの遷移を、ページを読み込み直さずに行う小さなライブラリ",
+  "private": true,
+  "repository": "github:yotashiraishi/page-transition",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./extensions": "./extensions.js"
+  },
+  "files": [
+    "index.js",
+    "extensions.js"
+  ],
+  "sideEffects": false
+}
