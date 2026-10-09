@@ -1,6 +1,6 @@
 {
   "name": "page-transition",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "サイト内リンクの遷移を、ページを読み込み直さずに行う小さなライブラリ",
   "private": true,
   "repository": "github:yotashiraishi/page-transition",

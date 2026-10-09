@@ -15,10 +15,10 @@
 
 マークアップはそのままでよい。
 
-**npm で入れる**(バンドラーを使うプロジェクト)。`#v0.1.0` の部分で版を固定する。
+**npm で入れる**(バンドラーを使うプロジェクト)。`#v0.1.1` の部分で版を固定する。
 
 ```bash
-npm install github:yotashiraishi/page-transition#v0.1.0
+npm install github:yotashiraishi/page-transition#v0.1.1
 ```
 
 ```js

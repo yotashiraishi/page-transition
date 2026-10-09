@@ -29,10 +29,17 @@ export function pageTransition(options = {}) {
     const cleanup = config.init(root);
     return typeof cleanup === 'function' ? cleanup : () => {};
   };
-  let cleanup = init(document.body);
 
-  // Navigation API の無いブラウザ・差し替える要素の無いページでは、通常の遷移のままにする
-  if (!window.navigation || !document.querySelector(config.container)) return { prefetch() {} };
+  // Navigation API の無いブラウザ・差し替える要素の無いページでは、init だけかけて通常の遷移のままにする
+  if (!window.navigation || !document.querySelector(config.container)) {
+    init(document.body);
+    return { prefetch() {} };
+  }
+
+  // 最初のページの HTML は init より前に取る(下で取っておくページに入れる)。init のあとに取ると、各機能が書き換えた状態
+  // (初期化済みの印など)のまま同じページへ差し替えることになり、機能がかけ直されない(トップで自分自身へのリンクを押したときなど)
+  const firstPage = document.documentElement.outerHTML;
+  let cleanup = init(document.body);
 
   // URL(ハッシュなし)→ { time: 取得を始めた時刻, page: Promise<html> }
   const cache = new Map();
@@ -58,7 +65,7 @@ export function pageTransition(options = {}) {
   };
 
   // 最初のページを、init で書き換える前の HTML のまま取っておく(戻ってきたときに通信せずに表示する)
-  cache.set(pageUrl(location.href), { time: Date.now(), page: Promise.resolve(document.documentElement.outerHTML) });
+  cache.set(pageUrl(location.href), { time: Date.now(), page: Promise.resolve(firstPage) });
 
   // 差し替えて開く URL か(ファイル・拡張の ignore が true を返したものは通常の遷移)
   const isTarget = (url, link) => !isFile(url) && !hooks('ignore').some((ignore) => ignore(url, link));
